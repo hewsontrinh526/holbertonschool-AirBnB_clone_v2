@@ -5,7 +5,6 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from models.city import City
-from models import storage
 
 
 class State(BaseModel, Base):
@@ -17,6 +16,7 @@ class State(BaseModel, Base):
         @property
         def cities(self):
             """Gets cities and returns list of City instances"""
+            from models import storage
             city_instance = storage.all(City)
             return [city for city in city_instance.values()
                     if city.state_id == self.id]
