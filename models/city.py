@@ -11,8 +11,8 @@ class City(BaseModel, Base):
     __tablename__ = 'cities'
     state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
     name = Column(String(128), nullable=False)
-    places = relationship("Place", backref="cities",
-                          cascade="all, delete-orphan")
+    places = relationship("Place", back_populates="cities",
+                          cascade="delete, delete-orphan")
 
     if os.getenv("HBNB_TYPE_STORAGE") == "db":
         state = relationship("State", back_populates="cities")
