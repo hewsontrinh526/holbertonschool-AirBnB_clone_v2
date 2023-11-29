@@ -8,6 +8,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
+
 class BaseModel:
     """Attributes for SQLAlchemy"""
     id = Column(String(60), primary_key=True, nullable=False)
