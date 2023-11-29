@@ -9,6 +9,7 @@ import os
 
 metadata = MetaData()
 
+
 class Place(BaseModel, Base):
     """ A place to stay """
 
@@ -16,9 +17,9 @@ class Place(BaseModel, Base):
         'place_amenity',
         metadata,
         Column('place_id', String(60), ForeignKey('places.id'),
-            primary_key=True, nullable=False),
+               primary_key=True, nullable=False),
         Column('amenity_id', String(60), ForeignKey('amenities.id'),
-            primary_key=True, nullable=False)
+               primary_key=True, nullable=False)
     )
 
     __tablename__ = 'places'
@@ -40,7 +41,7 @@ class Place(BaseModel, Base):
         reviews = relationship("Review", back_populates="place",
                                cascade="delete, delete-orphan")
         amenities = relationship("Amenity", secondary="place_amenity",
-                                viewonly=False)
+                                 viewonly=False)
 
     else:
         @property
