@@ -14,6 +14,7 @@ from models.amenity import Amenity
 from models.review import Review
 from models import storage
 
+
 class TestConsole(unittest.TestCase):
     def setUp(self):
         """Setting it up for tests"""
@@ -41,6 +42,7 @@ class TestConsole(unittest.TestCase):
         create_id = output
         created_key = "BaseModel." + create_id
         self.assertIn(created_key, storage.all())
+
 
 if __name__ == "__main__":
     unittest.main()
