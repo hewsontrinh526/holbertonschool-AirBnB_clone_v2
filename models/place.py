@@ -22,3 +22,18 @@ class Place(BaseModel, Base):
 
     user = relationship("User", back_populates="places")
     cities = relationship("City", back_populates="places")
+    reviews = relationship("Review", back_populates="places")
+
+    @property
+    def reviews(self):
+        """
+        Getter attribute to return a list of Review instances with place_id
+        equals to the current Place.id
+        """
+        from models import storage
+        review_dict = storage.all(Review)
+        review_list = []
+        for key, value in review_dict.items():
+            if self.id == value.place_id:
+                review_list[key] = value
+        return review_list
