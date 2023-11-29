@@ -5,22 +5,23 @@ from sqlalchemy import Table, Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 import os
 
-if os.getenv("HBNB_TYPE_STORAGE") == "db":
-       place_amenity = Table(
-              'place_amenity',
-              Base.metadata,
-              Column('place_id', String(60), ForeignKey('places.id'),
-                     primary_key=True, nullable=False),
-              Column('amenity_id', String(60), ForeignKey('amenities.id'),
-                     primary_key=True, nullable=False)
-       )
-       class Amenity(BaseModel, Base):
-       __tablename__ = 'amenities'
-       name = Column(String(128), nullable=False)
 
-       places = relationship("Place",
-                            secondary=place_amenity,
-                            back_populates='amenities'
-                            )
-else:
-       name = ""
+class Amenity(BaseModel, Base):
+       if os.getenv("HBNB_TYPE_STORAGE") == "db":
+              place_amenity = Table(
+                     'place_amenity',
+                     Base.metadata,
+                     Column('place_id', String(60), ForeignKey('places.id'),
+                            primary_key=True, nullable=False),
+                     Column('amenity_id', String(60), ForeignKey('amenities.id'),
+                            primary_key=True, nullable=False)
+              )
+              __tablename__ = 'amenities'
+              name = Column(String(128), nullable=False)
+
+              places = relationship("Place",
+                                   secondary=place_amenity,
+                                   back_populates='amenities'
+                                   )
+       else:
+              name = ""
