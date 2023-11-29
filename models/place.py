@@ -22,7 +22,8 @@ class Place(BaseModel, Base):
 
     user = relationship("User", back_populates="places")
     cities = relationship("City", back_populates="places")
-    reviews = relationship("Review", back_populates="places")
+    reviews = relationship("Review", back_populates="places",
+                           cascade="delete, delete-orphan")
 
     @property
     def reviews(self):
@@ -35,5 +36,5 @@ class Place(BaseModel, Base):
         review_list = []
         for key, value in review_dict.items():
             if self.id == value.place_id:
-                review_list[key] = value
+                review_list.append(value)
         return review_list
