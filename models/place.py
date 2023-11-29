@@ -24,6 +24,15 @@ class Place(BaseModel, Base):
     user = relationship("User", back_populates="places")
     cities = relationship("City", back_populates="places")
 
+    place_amenity = Table(
+        'place_amenity',
+        Base.metadata,
+        place_id = Column(String(60), ForeignKey('places.id'),
+               primary_key=True, nullable=False),
+        ameniity_id = Column(String(60), ForeignKey('amenities.id'),
+               primary_key=True, nullable=False)
+    )
+
     if os.getenv("HBNB_TYPE_STORAGE") != "db":
         @property
         def reviews(self):
@@ -38,6 +47,34 @@ class Place(BaseModel, Base):
                 if self.id == value.place_id:
                     review_list.append(value)
             return review_list
+
+        @property
+        def amenites(self):
+            """
+            Getter attribute amenities that returns the list of Amenity
+            instances based on the attribute amenity_ids that contains all
+            Amenity.id linked to the Place
+            """
+            from models import storage
+            amenity_dict = storage.all(Amenity)
+            amenity_list = []
+            for key, value in amenity_dict.items():
+                if self.id == value.amenity_ids:
+                    amenity_list.append(value)
+            return amenity_list
+
+        @amenities.setter
+        def amenities(self, obj):
+            """
+            Setter attribute amenities that handles append method for adding
+            an Amenity.id to the attribute amenity_ids. This method should
+            accept only Amenity object, otherwise, do nothing.
+            """
+            from models import storage
+            if isinstance(obj, Amenity):
+                self.amenity_ids.append(obj.id)
     else:
         reviews = relationship("Review", back_populates="place",
                                cascade="delete, delete-orphan")
+        amenities = relationship("Amenity", secondary="place_amenity",
+                                viewonly=False)
