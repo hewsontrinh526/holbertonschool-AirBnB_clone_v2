@@ -2,9 +2,12 @@
 """ Place Module for HBNB project """
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, null
+from sqlalchemy import Table, MetaData
 from sqlalchemy.orm import relationship
 import os
 
+
+metadata = MetaData()
 
 class Place(BaseModel, Base):
     """ A place to stay """
@@ -26,7 +29,7 @@ class Place(BaseModel, Base):
 
     place_amenity = Table(
         'place_amenity',
-        Base.metadata,
+        metadata,
         Column('place_id', String(60), ForeignKey('places.id'),
                primary_key=True, nullable=False),
         Column('amenity_id', String(60), ForeignKey('amenities.id'),
