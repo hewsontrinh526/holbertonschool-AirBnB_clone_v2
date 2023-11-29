@@ -22,9 +22,7 @@ class Place(BaseModel, Base):
     amenity_ids = []
 
     user = relationship("User", back_populates="places")
-    cities = relationship("City", back_populates="places")
-    reviews = relationship("Review", back_populates="places",
-                           cascade="delete, delete-orphan")
+
     if os.getenv("HBNB_TYPE_STORAGE") != "db":
         @property
         def reviews(self):
@@ -39,3 +37,7 @@ class Place(BaseModel, Base):
                 if self.id == value.place_id:
                     review_list.append(value)
             return review_list
+    else:
+        reviews = relationship("Review", back_populates="places",
+                               cascade="delete, delete-orphan")
+        cities = relationship("City", back_populates="places")
