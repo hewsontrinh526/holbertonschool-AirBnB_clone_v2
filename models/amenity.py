@@ -7,6 +7,7 @@ import os
 
 
 class Amenity(BaseModel, Base):
+       __tablename__ = 'amenities'
        if os.getenv("HBNB_TYPE_STORAGE") == "db":
               place_amenity = Table(
                      'place_amenity',
@@ -16,7 +17,6 @@ class Amenity(BaseModel, Base):
                      Column('amenity_id', String(60), ForeignKey('amenities.id'),
                             primary_key=True, nullable=False)
               )
-              __tablename__ = 'amenities'
               name = Column(String(128), nullable=False)
 
               places = relationship("Place",
