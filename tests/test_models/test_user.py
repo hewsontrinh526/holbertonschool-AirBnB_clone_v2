@@ -30,5 +30,6 @@ class test_User(test_basemodel):
 
     def test_password(self):
         """ """
-        new = self.value()
-        self.assertEqual(type(new.password), str)
+        new_user = User()
+        with self.assertRaises(AttributeError):
+            password_value = new_user.password
