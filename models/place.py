@@ -3,6 +3,7 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, null
 from sqlalchemy.orm import relationship
+import os
 
 
 class Place(BaseModel, Base):
@@ -24,17 +25,17 @@ class Place(BaseModel, Base):
     cities = relationship("City", back_populates="places")
     reviews = relationship("Review", back_populates="places",
                            cascade="delete, delete-orphan")
-
-    @property
-    def reviews(self):
-        """
-        Getter attribute to return a list of Review instances with place_id
-        equals to the current Place.id
-        """
-        from models import storage
-        review_dict = storage.all(Review)
-        review_list = []
-        for key, value in review_dict.items():
-            if self.id == value.place_id:
-                review_list.append(value)
-        return review_list
+    if os.getenv("HBNB_TYPE_STORAGE") != "db":
+        @property
+        def reviews(self):
+            """
+            Getter attribute to return a list of Review instances with place_id
+            equals to the current Place.id
+            """
+            from models import storage
+            review_dict = storage.all(Review)
+            review_list = []
+            for key, value in review_dict.items():
+                if self.id == value.place_id:
+                    review_list.append(value)
+            return review_list
