@@ -13,6 +13,8 @@ from models.city import City
 from models.amenity import Amenity
 from models.review import Review
 from models import storage
+from sqlalchemy import create_engine, MetaData
+from sqlalchemy.orm import sessionmaker
 
 
 class TestConsole(unittest.TestCase):
@@ -42,6 +44,32 @@ class TestConsole(unittest.TestCase):
         create_id = output
         created_key = "BaseModel." + create_id
         self.assertIn(created_key, storage.all())
+
+class TestDBStorage(unittest.TestCase):
+    def setUp(self):
+        engine = create_engine('sqlite:///:memory:')
+        Session = sessionmaker(bind=engine)
+        self.session = Session()
+
+        storage._DBStorage__session = self.session
+
+    def tearDown(self):
+        self.session.close()
+
+    def test_all_method(self):
+        with self.subTest():
+            test_instance = BaseModel()
+            storage.new(test_instance)
+            storage.save()
+
+            all_objects = storage.all(BaseModel)
+            self.assertIn(test_instance, all_objects.values())
+
+    def test_new_method(self):
+        with self.subTest():
+            test_instance = BaseModel()
+            storage.new(test_instance)
+            self.assertIn(test_instance, storage.all(BaseModel).values())
 
 
 if __name__ == "__main__":
