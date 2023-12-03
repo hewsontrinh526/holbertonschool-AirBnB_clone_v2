@@ -45,6 +45,7 @@ class TestConsole(unittest.TestCase):
         created_key = "BaseModel." + create_id
         self.assertIn(created_key, storage.all())
 
+
 class TestDBStorage(unittest.TestCase):
     def setUp(self):
         engine = create_engine('sqlite:///:memory:')
