@@ -9,9 +9,7 @@ from flask import Flask
 app = Flask(__name__)
 
 
-app.route('/', strict_slashes=False)
-
-
+@app.route('/', strict_slashes=False)
 def hello():
     """
     Displays a Hello string
@@ -19,9 +17,7 @@ def hello():
     return "Hello HBNB!"
 
 
-app.route('/hbnb', strict_slashes=False)
-
-
+@app.route('/hbnb', strict_slashes=False)
 def hbnb():
     """
     Displays a HBNB string
@@ -29,9 +25,7 @@ def hbnb():
     return "HBNB"
 
 
-app.route('/c/<text>', strict_slashes=False)
-
-
+@app.route('/c/<text>', strict_slashes=False)
 def c_text(text):
     """
     Displays a C followed by the value of the text variable
