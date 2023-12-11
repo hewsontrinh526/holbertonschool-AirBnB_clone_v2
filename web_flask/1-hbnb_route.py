@@ -1,11 +1,13 @@
 #!/usr/bin/python3
 """
-A script that starts a Flask web application with route /hbnb
+A script that starts a Flask web application with different routes like
+/hbnb and /
 """
 from flask import Flask
 
 
 app = Flask(__name__)
+
 
 @app.route('/', strict_slashes=False)
 def hello():
@@ -13,6 +15,7 @@ def hello():
     Displays a Hello string
     """
     return "Hello HBNB!"
+
 
 @app.route('/hbnb', strict_slashes=False)
 def hbnb():
