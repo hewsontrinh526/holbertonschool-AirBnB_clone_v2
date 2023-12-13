@@ -21,7 +21,7 @@ def teardown_db(exception):
 
 @app.route("/states", strict_slashes=False)
 @app.route("/states/<id>", strict_slashes=False)
-def states_list(id=""):
+def states_list(id=None):
     """
     Displays an HTML page with a list of all states
     """
@@ -36,10 +36,12 @@ def states_list(id=""):
         if specific_state is not None:
             specific_state.cities = sorted(specific_state.cities,
                                            key=lambda city: city.name)
+        else:
+            id = True
         states = None
 
     return render_template('9-states.html', states=states,
-                           specific_state=specific_state)
+                           specific_state=specific_state, id=id)
 
 
 if __name__ == "__main__":
