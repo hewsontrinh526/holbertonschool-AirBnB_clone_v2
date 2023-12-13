@@ -27,12 +27,21 @@ def states_list():
     """
     states = storage.all(State).values()
     states = sorted(states, key=lambda state: state.name)
-    cities = storage.all(City).values()
-    cities = sorted(cities, key=lambda city: city.name)
     amenities = storage.all(Amenity).values()
     amenities = sorted(amenities, key=lambda amenity: amenity.name)
+
+    specific_state = None
+
+    if id:
+        specific_state = next((state for state in states if state.id == id),
+                              None)
+        if specific_state is not None:
+            specific_state.cities = sorted(specific_state.cities,
+                                           key=lambda city: city.name)
+        states = None
+
     return render_template('10-hbnb_filters.html', states=states,
-                           cities=cities, amenities=amenities)
+                           specific_state=specific_state, amenities=amenities)
 
 
 if __name__ == "__main__":
