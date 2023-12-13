@@ -21,7 +21,7 @@ def teardown_db(exception):
 
 @app.route("/states", strict_slashes=False)
 @app.route("/states/<id>", strict_slashes=False)
-def states_list(id=None):
+def states_list(id=""):
     """
     Displays an HTML page with a list of all states
     """
