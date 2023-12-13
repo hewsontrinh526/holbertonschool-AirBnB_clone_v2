@@ -36,12 +36,10 @@ def states_list(id=None):
         if specific_state is not None:
             specific_state.cities = sorted(specific_state.cities,
                                            key=lambda city: city.name)
-        else:
-            id = True
         states = None
 
     return render_template('9-states.html', states=states,
-                           specific_state=specific_state, id=id)
+                           specific_state=specific_state)
 
 
 if __name__ == "__main__":
