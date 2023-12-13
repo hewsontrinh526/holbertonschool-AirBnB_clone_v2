@@ -32,10 +32,10 @@ def states_list(id=None):
 
     if id:
         specific_state = next((state for state in states if state.id == id),
-                               None)
+                              None)
         if specific_state is not None:
             specific_state.cities = sorted(specific_state.cities,
-                                            key=lambda city: city.name)
+                                           key=lambda city: city.name)
         states = None
 
     return render_template('9-states.html', states=states,
