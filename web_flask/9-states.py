@@ -28,10 +28,6 @@ def states_list(id=None):
     states = storage.all(State).values()
     states = sorted(states, key=lambda state: state.name)
 
-    if states = []:
-        states = None
-        return render_template('9-states.html', states=states)
-
     specific_state = None
 
     if id:
