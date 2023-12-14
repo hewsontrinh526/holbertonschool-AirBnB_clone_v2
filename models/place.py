@@ -18,14 +18,16 @@ class Place(BaseModel, Base):
     metadata,
     Column('place_id', String(60), ForeignKey('places.id'),
             primary_key=True, nullable=False),
-    Column('amenity_id', String(60), ForeignKey('amenities.id'),
+    Column('amenity_id', String(60, collation='latin1_swedish_ci'),
+           ForeignKey('amenities.id'),
             primary_key=True, nullable=False)
     )
 
 
-    __tablename__ = 'places'
     if os.getenv("HBNB_TYPE_STORAGE") == "db":
-        city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
+        __tablename__ = 'places'
+        city_id = Column(String(60, collation='latin1_swedish_ci'),
+                         ForeignKey('cities.id'), nullable=False)
         user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
         name = Column(String(128), nullable=False)
         description = Column(String(1024), nullable=True, default=null())
@@ -42,7 +44,7 @@ class Place(BaseModel, Base):
         reviews = relationship("Review", back_populates="place",
                                cascade="delete, delete-orphan")
         amenities = relationship("Amenity", secondary="place_amenity",
-                                 viewonly=False)
+                                 viewonly=False, overlaps="place_amenities")
 
     else:
         @property

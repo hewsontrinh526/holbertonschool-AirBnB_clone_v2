@@ -1,20 +1,21 @@
 #!/usr/bin/python3
-""" State Module for HBNB project """
-from models.base_model import BaseModel, Base
-from sqlalchemy import Table, Column, Integer, String, ForeignKey
-from sqlalchemy.orm import relationship
+""" Amenity Module for HBNB project """
 import os
+from models.base_model import BaseModel, Base
+from sqlalchemy.orm import relationship
+from sqlalchemy import Column, String, ForeignKey, Table
 
 
 class Amenity(BaseModel, Base):
-    __tablename__ = 'amenities'
     if os.getenv("HBNB_TYPE_STORAGE") == "db":
+        __tablename__ = 'amenities'
         place_amenity = Table(
             'place_amenity',
             Base.metadata,
             Column('place_id', String(60), ForeignKey('places.id'),
                    primary_key=True, nullable=False),
-            Column('amenity_id', String(60), ForeignKey('amenities.id'),
+            Column('amenity_id', String(60, collation='latin1_swedish_ci'),
+                   ForeignKey('amenities.id'),
                    primary_key=True, nullable=False)
               )
         name = Column(String(128), nullable=False)
