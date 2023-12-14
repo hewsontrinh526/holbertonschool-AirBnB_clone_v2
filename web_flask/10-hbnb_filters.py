@@ -9,16 +9,17 @@ from models.amenity import Amenity
 app = Flask(__name__)
 
 
-@app.route("/filters", strict_slashes=False)
+@app.route("/hbnb_filters", strict_slashes=False)
 def filters():
-    """ Print out HTML lisitng out all Cities by their States """
+    """
+    Print out HTML lisitng out all Cities by their States
+    """
     states = storage.all(State).values()
-    states = sorted(states.values(), key=lambda state: state.name)
+    states = sorted(states, key=lambda state: state.name)
     cities = storage.all(City).values()
-    cities = sorted(cities.values(), key=lambda city: city.name)
-    amenities = storage.all(Amenity)
-    amenities = sorted(amenities.values(),
-                       key=lambda amenities: amenities.name)
+    cities = sorted(cities, key=lambda city: city.name)
+    amenities = storage.all(Amenity).values()
+    amenities = sorted(amenities, key=lambda amenity: amenity.name)
 
     return render_template('10-hbnb_filters.html', states=states,
                            cities=cities, amenities=amenities)
