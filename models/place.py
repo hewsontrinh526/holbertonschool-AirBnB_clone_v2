@@ -12,20 +12,18 @@ metadata = MetaData()
 
 class Place(BaseModel, Base):
     """ A place to stay """
-
-    place_amenity = Table(
-    'place_amenity',
-    metadata,
-    Column('place_id', String(60), ForeignKey('places.id'),
-            primary_key=True, nullable=False),
-    Column('amenity_id', String(60, collation='latin1_swedish_ci'),
-           ForeignKey('amenities.id'),
-            primary_key=True, nullable=False)
-    )
-
-
     if os.getenv("HBNB_TYPE_STORAGE") == "db":
         __tablename__ = 'places'
+        place_amenity = Table(
+            'place_amenity',
+            metadata,
+            Column('place_id', String(60), ForeignKey('places.id'),
+                    primary_key=True, nullable=False),
+            Column('amenity_id', String(60, collation='latin1_swedish_ci'),
+                   ForeignKey('amenities.id'),
+                   primary_key=True, nullable=False)
+        )
+
         city_id = Column(String(60, collation='latin1_swedish_ci'),
                          ForeignKey('cities.id'), nullable=False)
         user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
