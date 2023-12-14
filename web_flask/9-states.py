@@ -26,7 +26,11 @@ def states_list(id=None):
     Displays an HTML page with a list of all states
     """
     states = storage.all(State).values()
-    states = sorted(states, key=lambda state: state.name)
+
+    if states is not None:
+        states = sorted(states, key=lambda state: state.name)
+    else:
+        states = []
 
     specific_state = None
 
