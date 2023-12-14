@@ -26,17 +26,11 @@ def states_list(id=None):
     Displays an HTML page with a list of all states
     """
     states = storage.all(State).values()
-    states = sorted(states, key=lambda state: state.name)
-
-    if not states:
-        return render_template('9-states.html', states=None,
-                               specific_state=None)
+    states = sorted(states, key=lambda state: state.name) if states else []
 
     specific_state = None
-
     if id:
-        specific_state = next((state for state in states if state.id == id),
-                              None)
+        specific_state = next((state for state in states if state.id == id), None)
         if specific_state is not None:
             specific_state.cities = sorted(specific_state.cities,
                                            key=lambda city: city.name)
