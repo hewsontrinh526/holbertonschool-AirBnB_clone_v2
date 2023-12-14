@@ -30,7 +30,8 @@ def states_list(id=None):
 
     specific_state = None
     if id:
-        specific_state = next((state for state in states if state.id == id), None)
+        specific_state = next((state for state in states if state.id == id),
+                              None)
         if specific_state is not None:
             specific_state.cities = sorted(specific_state.cities,
                                            key=lambda city: city.name)
