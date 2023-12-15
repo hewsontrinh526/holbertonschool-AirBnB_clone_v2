@@ -19,12 +19,12 @@ class Place(BaseModel, Base):
             metadata,
             Column('place_id', String(60), ForeignKey('places.id'),
                     primary_key=True, nullable=False),
-            Column('amenity_id', String(60, collation='latin1_swedish_ci'),
+            Column('amenity_id', String(60),
                    ForeignKey('amenities.id'),
                    primary_key=True, nullable=False)
         )
 
-        city_id = Column(String(60, collation='latin1_swedish_ci'),
+        city_id = Column(String(60),
                          ForeignKey('cities.id'), nullable=False)
         user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
         name = Column(String(128), nullable=False)
