@@ -12,8 +12,8 @@ metadata = MetaData()
 
 class Place(BaseModel, Base):
     """ A place to stay """
+    __tablename__ = 'places'
     if os.getenv("HBNB_TYPE_STORAGE") == "db":
-        __tablename__ = 'places'
         place_amenity = Table(
             'place_amenity',
             metadata,

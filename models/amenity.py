@@ -7,8 +7,8 @@ from sqlalchemy import Column, String, ForeignKey, Table
 
 
 class Amenity(BaseModel, Base):
+    __tablename__ = 'amenities'
     if os.getenv("HBNB_TYPE_STORAGE") == "db":
-        __tablename__ = 'amenities'
         place_amenity = Table(
             'place_amenity',
             Base.metadata,
